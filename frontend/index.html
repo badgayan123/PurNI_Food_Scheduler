@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PurNi Menu</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>PurNi Menu</h1>
+    <!-- Subtitle removed per request -->
+    <div class="week-nav">
+      <button id="prevWeek" type="button">← Previous</button>
+      <span id="weekLabel">Loading…</span>
+      <button id="nextWeek" type="button">Next →</button>
+      <button id="retryBtn" type="button" class="retry-btn hidden">Retry</button>
+      <a id="downloadOds" href="#" class="download-btn" download target="_blank">Download ODS</a>
+      <a id="downloadPdf" href="#" class="download-btn" download target="_blank">Download PDF</a>
+    </div>
+    <div class="editor-select">
+      <label>Editing as:</label>
+      <select id="editorName">
+        <option value="Nitesh">Nitesh</option>
+        <option value="Purnima">Purnima</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <!-- #CALORIE_PROTEIN_CHARTS - hidden for now, restore later -->
+    <section class="charts hidden">
+      <div class="chart-card"><h3>Calories per day</h3><canvas id="calChart"></canvas></div>
+      <div class="chart-card"><h3>Protein per day (g)</h3><canvas id="proteinChart"></canvas></div>
+    </section>
+
+    <section class="menu-section">
+      <h2>Weekly Menu</h2>
+      <p class="hint">Click a cell to add or edit. Add multiple foods per meal (e.g. bread + butter).</p>
+      <div class="menu-grid" id="menuGrid"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3 id="modalTitle">Monday Breakfast</h3>
+      <p class="slot-hint">Add each food separately (bread, butter, milk...).</p>
+      <div id="slotItems" class="slot-items-list"></div>
+      <p class="add-more-label">Add food to this meal:</p>
+      <form id="mealForm">
+        <label>Food name</label>
+        <input type="text" id="foodName" placeholder="e.g. Rice, Dal, Chicken curry" required />
+        <!-- #SERVING_CALORIE_PROTEIN - hidden for now, restore later
+        <label>Serving size</label>
+        <input type="text" id="servingSize" placeholder="e.g. 1 cup, 2 chapatis" value="1 serving" />
+        <label>Calories</label>
+        <input type="number" id="calories" placeholder="Auto-filled from lookup" min="0" step="1" />
+        <label>Protein (g)</label>
+        <input type="number" id="protein" placeholder="Auto-filled from lookup" min="0" step="0.1" />
+        <button type="button" id="lookupBtn">Look up nutrition</button>
+        -->
+        <div class="form-actions">
+          <button type="submit" id="submitBtn">Add food</button>
+          <button type="button" id="deleteBtn" class="delete-btn">Delete</button>
+          <button type="button" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js?v=12"></script>
+</body>
+</html>

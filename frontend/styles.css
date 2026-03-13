@@ -1,0 +1,449 @@
+/* PurNi Menu - Purnima & Nitesh */
+:root {
+  --bg: #0f1419;
+  --surface: #1a2332;
+  --surface2: #243044;
+  --accent: #e8b86d;
+  --accent-dim: #c99a4a;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --danger: #f85149;
+  --success: #3fb950;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: var(--accent);
+  margin: 0 0 0.25rem 0;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin: 0 0 1rem 0;
+}
+
+.subtitle strong {
+  color: var(--text);
+}
+
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.week-nav button {
+  background: var(--surface2);
+  border: 1px solid var(--surface2);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.week-nav button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.download-btn {
+  background: var(--surface2);
+  border: 1px solid var(--surface2);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.download-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.retry-btn {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
+
+.retry-btn:hover {
+  background: #da3633;
+  color: white;
+}
+
+#weekLabel {
+  font-weight: 600;
+  min-width: 260px;
+}
+
+.editor-select {
+  margin-top: 0.5rem;
+}
+
+.editor-select label {
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+}
+
+.editor-select select {
+  background: var(--surface2);
+  border: 1px solid var(--surface2);
+  color: var(--text);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid var(--surface2);
+}
+
+.chart-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.menu-section {
+  margin-top: 2rem;
+}
+
+.menu-section h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1rem 0;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: 120px repeat(7, 1fr);
+  gap: 2px;
+  background: var(--surface2);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.menu-grid .cell {
+  background: var(--surface);
+  padding: 0.5rem;
+  min-height: 70px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.menu-grid .cell:hover {
+  background: var(--surface2);
+}
+
+.menu-grid .cell.header {
+  background: var(--surface2);
+  font-weight: 600;
+  text-align: center;
+  cursor: default;
+  min-height: auto;
+  padding: 0.75rem;
+}
+
+.menu-grid .cell.meal-label {
+  background: var(--surface2);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.menu-grid .cell .food {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.menu-grid .cell .stats {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.menu-grid .cell .by {
+  font-size: 0.7rem;
+  color: var(--accent-dim);
+}
+
+/* Slot items list in modal (multiple foods per meal) */
+.slot-items-list {
+  margin-bottom: 1rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.slot-items-list.empty .slot-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+.slot-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--surface2);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+.slot-item-name {
+  flex: 1;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.slot-item-stats {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.slot-item-edit,
+.slot-item-delete {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.slot-item-edit {
+  background: var(--accent);
+  color: var(--bg);
+}
+.slot-item-delete {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+.slot-item-delete:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid var(--surface2);
+}
+
+.modal-content h3 {
+  margin: 0 0 1rem 0;
+}
+
+.modal-content label {
+  display: block;
+  margin: 0.75rem 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--surface2);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#lookupBtn {
+  margin: 0.75rem 0;
+  padding: 0.4rem 0.75rem;
+  background: var(--surface2);
+  border: none;
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#lookupBtn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.form-actions button[type="submit"] {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: var(--accent-dim);
+}
+
+.form-actions .delete-btn {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.form-actions .delete-btn:hover {
+  background: var(--danger);
+  color: white;
+}
+
+.form-actions #cancelBtn {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.form-actions #cancelBtn:hover {
+  background: var(--surface);
+}
+
+/* Mobile friendly */
+@media (max-width: 768px) {
+  body {
+    padding: 0.75rem;
+  }
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  .week-nav {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  #weekLabel {
+    min-width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  .menu-section {
+    margin-top: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .menu-grid {
+    grid-template-columns: 70px repeat(7, minmax(72px, 1fr));
+    font-size: 0.8rem;
+    min-width: 580px;
+  }
+  .menu-grid .cell {
+    min-height: 50px;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+  .menu-grid .cell.meal-label {
+    font-size: 0.75rem;
+  }
+  .download-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.75rem;
+  }
+  .modal {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+    overflow-y: auto;
+  }
+  .modal-content {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .form-actions {
+    flex-wrap: wrap;
+  }
+  .form-actions button {
+    flex: 1;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.25rem;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+  }
+  .menu-grid {
+    grid-template-columns: 60px repeat(7, minmax(64px, 1fr));
+    min-width: 520px;
+  }
+}
