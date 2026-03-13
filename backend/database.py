@@ -4,8 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-# Use persistent path for deployment
-DATA_DIR = os.environ.get("DATA_DIR", ".")
+# Use writable path: /tmp on Render (ephemeral), else current dir
+DATA_DIR = os.environ.get("DATA_DIR", "/tmp" if os.environ.get("RENDER") else ".")
 DATABASE_URL = f"sqlite:///{os.path.join(DATA_DIR, 'purni_menu.db')}"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})

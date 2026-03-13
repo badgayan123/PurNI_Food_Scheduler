@@ -7,7 +7,7 @@ from pathlib import Path
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, Response, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -397,12 +397,33 @@ def download_menu_ods(year: int, week_number: int, db: Session = Depends(get_db)
 
 
 # --- Serve frontend ---
-STATIC_DIR = Path(__file__).resolve().parent.parent / "frontend"
+def _get_static_dir() -> Path:
+    """Find frontend dir: works for local, Render, Azure."""
+    base = Path(__file__).resolve().parent.parent
+    front = base / "frontend"
+    if (front / "index.html").exists():
+        return front
+    # Fallback: cwd (Render/Azure often set this to project root)
+    cwd_front = Path.cwd() / "frontend"
+    if (cwd_front / "index.html").exists():
+        return cwd_front
+    return front  # Return anyway so mount doesn't fail
+
+
+STATIC_DIR = _get_static_dir()
 
 
 @app.get("/")
 def index():
-    return FileResponse(STATIC_DIR / "index.html")
+    index_path = STATIC_DIR / "index.html"
+    if index_path.exists():
+        return FileResponse(str(index_path))
+    # Fallback if frontend not found
+    return HTMLResponse("""
+    <!DOCTYPE html><html><head><meta charset="utf-8"><title>PurNi Menu</title></head>
+    <body><h1>PurNi Menu</h1><p>Frontend files not found. <a href="/api/health">API status</a></p></body>
+    </html>
+    """)
 
 
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")

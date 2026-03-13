@@ -26,12 +26,13 @@
 
 ## Step 2: Configure Startup Command
 
-1. Go to your App Service → **Configuration** → **General settings**
-2. Set **Startup Command** to:
+1. Go to your App Service → **Configuration** → **Stack settings**
+2. Scroll to **Startup Command**
+3. Set it to:
    ```
    gunicorn backend.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
    ```
-3. Click **Save**
+4. Click **Save**
 
 ---
 

@@ -78,3 +78,9 @@ async def get_nutrition(food_name: str) -> tuple[float, float]:
     if result:
         return result
     return _get_fallback_nutrition(food_name)
+
+
+def get_nutrition_sync(food_name: str) -> tuple[float, float]:
+    """Sync wrapper for Streamlit and other non-async callers."""
+    import asyncio
+    return asyncio.run(get_nutrition(food_name))
